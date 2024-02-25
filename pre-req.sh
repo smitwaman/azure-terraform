@@ -1,8 +1,8 @@
 #!/bin/bash
 
-RESOURCE_GROUP_NAME=az900
-STORAGE_ACCOUNT_NAME=sparx900
-CONTAINER_NAME=tfstate
+RESOURCE_GROUP_NAME= 'az-900'
+STORAGE_ACCOUNT_NAME= sparx900
+CONTAINER_NAME= tfstate
 
 # Create resource group
 az group create --name $RESOURCE_GROUP_NAME --location 'US East'
