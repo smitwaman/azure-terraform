@@ -1,4 +1,4 @@
-rgname                 = "test-piyush-rg"
+rgname                 = "azure900"
 location               = "East US"
-service_principal_name = "test-piyush-spn"
-keyvault_name          = "test-piyush-kv-101"
+service_principal_name = "sparx900"
+keyvault_name          = "sparx900"
