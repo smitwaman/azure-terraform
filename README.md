@@ -1,110 +1,37 @@
+# Terraform examples on Microsoft Azure
 
-# Provision AKS cluster using Terraform via Service Principal
+Terraform is an open-source infrastructure as code software tool that provides a consistent CLI workflow to manage hundreds of cloud services. Terraform codifies cloud APIs into declarative configuration files.
 
-In this project, we will be creating AKS cluster the right way by using service principle.kubeconfig and service principle will be generated after the terraform plan and secret will be upload to keyvault to be used further.
+Terraform is used to create, manage, and update infrastructure resources such as VMs, storage, containers, and more. Almost any infrastructure type can be represented as a resource in Terraform.
 
-## Below resources will be created using this terraform configuration:-
-- Resource Group
-- Service Principle
-- AKS cluster using the SPN
-- Azure key vault to store the client secret
-- Secret uploaded to key vault
-- kubeconfig for AKS
+This repo contains [Terraform](https://www.terraform.io/) code examples on Microsoft Azure.
 
+The Github repository
+[https://github.com/alfonsof/terraform-examples-aws](https://github.com/alfonsof/terraform-examples-aws)
+contains the code samples based in the book *[Terraform: Up and Running](http://www.terraformupandrunning.com)* by [Yevgeniy Brikman](http://www.ybrikman.com). But those examples use AWS (Amazon Web Services).
 
-## Pre-requisites
+Terraform also supports other Cloud providers and this Github repository contains the code samples of the book on Microsoft Azure.
 
-- kubectl cli installed
-- Azure CLI installed and logged in
-- Storage Account and blob container created to store the tfstate file as backend, you can use below shell script as well
+## Quick start
 
-``` shell
-#!/bin/bash
+You must have a [Microsoft Azure](https://azure.microsoft.com/) subscription.
 
-RESOURCE_GROUP_NAME=backend-rg
-STORAGE_ACCOUNT_NAME=backendsa101
-CONTAINER_NAME=tfstate
+The code consists of Terraform examples using HashiCorp Configuration Language (HCL) on Microsoft Azure.
 
-# Create resource group
-az group create --name $RESOURCE_GROUP_NAME --location canadacentral
+All the code is in the [code](/code) folder.
 
-# Create storage account
-az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
+For instructions on running the code, please consult the README in each folder.
 
-# Create blob container
-az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME
-```
+This is the list of examples:
 
+* [01-hello-world](code/01-hello-world) - Terraform "Hello, World": Example of how to deploy a single server on Microsoft Azure using the shortest script.
+* [02-one-server](code/02-one-server) - Terraform One Server: Example of how deploy a single server on Microsoft Azure.
+* [03-one-webserver](code/03-one-webserver) - Terraform Web Server: Example of how deploy a single web server on Microsoft Azure. The web server returns "Hello, World" for the URL `/` listening on port 8080.
+* [04-one-webserver-with-vars](code/04-one-webserver-with-vars) - Terraform Web Server with vars: Example of how deploy a single web server on Microsoft Azure. The web server returns "Hello, World" for the URL `/` listening on port 8080, which is defined as a variable.
+* [05-cluster-webserver](code/05-cluster-webserver) - Terraform Cluster Web Server: Example of how deploy a cluster of web servers on Microsoft Azure using Azure Virtual Machine Scale Set, as well as a load balancer using Azure Load Balancer. The cluster of web servers returns "Hello, World" for the URL `/`. The load balancer listens on port 80.
+* [06-create-blob-storage](code/06-create-blob-storage) - Terraform Create Blob Storage: Example of how deploy the creation of a Blob Storage container on Microsoft Azure.
+* [07-terraform-state](code/07-terraform-state) - Terraform State: Example of how to store the information about what infrastructure has been created on Microsoft Azure.
 
-## Usage/Examples
+## License
 
-### 1) login to the CLI
-```shell
-az login --use-device-code
-```
-### 2) set alias
-```shell
-alias tf=terraform
-```
-### 3) initialize the providers
-```shell
-tf init
-```
-### 4) Run the plan
-```shell
-tf plan
-```
-### 5) Apply the changes
-```shell
-tf apply --auto-approve
-```
-
-
-
-
-## Some common Errors
-
-#### Error1:-
-``` shell
-Error: creating Cluster: (Managed Cluster Name 
-"clusternew-aks-cluster" / Resource Group "rgname"): 
-containerservice.ManagedClustersClient#CreateOrUpdate: 
-Failure sending request: StatusCode=404 -- Original Error: 
-Code="ServicePrincipalNotFound" Message="Service principal 
-clientID: xxxx-xxxxx-xxxx-xxxxx not found in Active Directory
- tenant xxxx-xxxxx-xxxx-xxxxx, Please see https://aka.ms/
- aks-sp-help for more details."
-```
-#### Resolution:-
-Rerun the tf apply command, this could be a bug in the 
-particular provider version. Running the command again 
-resolves the issue.
-
-
-#### Error2:-
-``` shell
-Error: checking for presence of existing Secret 
-"xxxx-xxxxx-xxxx-xxxxx" (Key Vault "https://keyvaultname.
-vault.azure.net/"): keyvault.BaseClient#GetSecret: Failure 
-responding to request: StatusCode=403 -- Original Error: 
-autorest/azure: Service returned an error. Status=403 
-Code="Forbidden" Message="Caller is not authorized to perform
- action on resource.\r\nIf role assignments, deny assignments
-  or role definitions were changed recently, InnerError=
-  {"code":"ForbiddenByRbac"}
-  
-  on main.tf line 46, in resource "azurerm_key_vault_secret"
-   "example":      
-  46: resource "azurerm_key_vault_secret" "example" {
-```
-
-#### Resolution:-
-User should have keyvault admin role even if the user has owner role.
-
-## Video reference
-
-Checkout the below video for complete hands-on demo of this project
-
-[![AKS Cluster using Terraform](https://i9.ytimg.com/vi_webp/I-MbnfNcikk/mqdefault.webp?v=63443239&sqp=CLjds6MG&rs=AOn4CLAhbOYDv2--Gi37A6TWX3ZjFof4kQ)](https://youtu.be/I-MbnfNcikk)
-
-
+This code is released under the MIT License. See LICENSE file.
